@@ -5,7 +5,6 @@ var _ = fis.util;
 
 var fs = require('fs');
 var path = require('path');
-var mkdirp = require('mkdirp');
 
 function upload(receiver, to, release, content, file, callback) {
   var subpath = file.subpath;
@@ -45,7 +44,7 @@ module.exports = function(options, modified, total, callback) {
   var cachePostSuccessFile;
   var cachePostSuccess;
   if (options.cacheDir) { // 配置了缓存目录
-    mkdirp.sync(options.cacheDir);
+    _.mkdir(options.cacheDir);
     cachePostSuccessFile = path.join(options.cacheDir, 'postsuccess.txt');
     if (fs.existsSync(cachePostSuccessFile)) {
       cachePostSuccess = String(fs.readFileSync(cachePostSuccessFile)).split(/\n\r?/);
@@ -63,7 +62,7 @@ module.exports = function(options, modified, total, callback) {
       // e.g. "http://127.0.0.1:8080/receiver,/home/public,/css/base.css"
       cacheHash = [receiver.replace(/\?.*$/, ''), to, file.getUrl()].join();
       if (!file.useHash) { // 如果文件名中没有使用 hash 则自动补上
-        cacheHash += ',' + file.getHash();
+        cacheHash += ',' + _.md5(file.getContent()); // file.getHash() 内容更新获取的还是同一个值
       }
       if (cachePostSuccess && cachePostSuccess.indexOf(cacheHash) >= 0) {
         var time = '[' + fis.log.now(true) + ']';

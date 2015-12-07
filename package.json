@@ -1,6 +1,6 @@
 {
-  "name": "fis3-deploy-http-push",
-  "version": "1.0.3",
+  "name": "fis3-deploy-http-push2",
+  "version": "0.0.1",
   "description": "fis3 deploy http-push plugin",
   "main": "index.js",
   "scripts": {
@@ -12,13 +12,20 @@
     "fis3",
     "deploy"
   ],
-  "author": "FIS",
+  "author": [{
+    "name": "fex-team",
+    "url": "http://github.com/fex-team"
+  }, {
+    "name": "zswang",
+    "url": "http://weibo.com/zswang"
+  }],
   "license": "BSD",
-  "dependencies": {
-    "mkdirp": "^0.5.0"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fex-team/fis3-deploy-http-push.git"
-  }
+    "url": "https://github.com/zswang/fis3-deploy-http-push2.git"
+  },
+  "file": [
+    "index.js",
+    "README.md"
+  ]
 }

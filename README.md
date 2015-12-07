@@ -1,13 +1,15 @@
 # fis3 http 部署插件
 
-FIS 默认的部署插件，提供本地部署以及远程upload部署能力。
+FIS 默认的部署插件，提供本地部署以及远程 upload 部署能力。
+
+*该版本可应用在生成环境，但接收端保证安全和完备性。*
 
 ## 安装
 
 全局安装或者本地安装都可以。
 
 ```
-npm install fis3-deploy-http-push
+npm install fis3-deploy-http-push2
 ```
 
 ## 使用方法
@@ -16,7 +18,7 @@ npm install fis3-deploy-http-push
 
 ```js
 fis.match('*.js', {
-    deploy: fis.plugin('http-push', {
+    deploy: fis.plugin('http-push2', {
         // 如果配置了 receiver，FIS 会把文件逐个 post 到接收端上
         receiver: 'http://www.example.com:8080/receiver.php',
         // 这个参数会跟随 POST 请求一起发送
