@@ -56,6 +56,16 @@ module.exports = function(options, modified, total, callback) {
 
   var steps = [];
 
+  if (options.notify) { // 通知服务器处理状态
+    steps.push(function(next) {
+      upload(receiver, '#begin', '', '', {
+        subpath: '#begin'
+      }, function(error) {
+        next();
+      });
+    });
+  }
+
   modified.forEach(function(file) {
     var cacheHash;
     if (cachePostSuccessFile) { // 需要处理缓存
@@ -99,6 +109,15 @@ module.exports = function(options, modified, total, callback) {
       });
     });
   });
+  if (options.notify) { // 通知服务器处理状态
+    steps.push(function(next) {
+      upload(receiver, '#end', '', '', {
+        subpath: '#end'
+      }, function(error) {
+        next();
+      });
+    });
+  }
 
   _.reduceRight(steps, function(next, current) {
     return function() {
