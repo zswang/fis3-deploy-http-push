@@ -48,6 +48,20 @@ module.exports = function(options, modified, total, callback) {
     cachePostSuccessFile = path.join(options.cacheDir, 'postsuccess.txt');
     if (fs.existsSync(cachePostSuccessFile)) {
       cachePostSuccess = String(fs.readFileSync(cachePostSuccessFile)).split(/\n\r?/);
+
+      // 对于无 hash 的文件，只留下最近一个提交记录
+      var dict = {};
+      for (var i = cachePostSuccess.length - 1; i >= 0; i--) {
+        var items = cachePostSuccess[i].split(/,/);
+        if (items.length > 3) { // 存在 hash // <host>,<path>,<file>,<hash>
+          var key = items.slice(0, -1); // <host>,<path>,<file>
+          if (dict[key]) {
+            cachePostSuccess.splice(i, 1); // remove
+          } else {
+            dict[key] = true;
+          }
+        }
+      }
     }
   }
 
